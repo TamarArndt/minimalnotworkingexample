@@ -1,6 +1,7 @@
 import datetime
 from sqlalchemy import and_
 from helper import timehelper
+from database import dbtables
 
 
 # class with some status information as properties and functions to change those properties
@@ -24,8 +25,8 @@ class ApplicationStatus():
 
 def determineDatabaseRange(dbConnection):
     session = dbConnection.Session()
-    query = session.query(LocationsTable.time)
-    db_range_timestamp = [query.first()[0], query.order_by(LocationsTable.id.desc()).first()[0]]
+    query = session.query(dbtables.LocationsTable.time)
+    db_range_timestamp = [query.first()[0], query.order_by(dbtables.LocationsTable.id.desc()).first()[0]]
     db_range_utc = [timehelper.timestamp_to_utc(db_range_timestamp[0]), timehelper.timestamp_to_utc(db_range_timestamp[1])]
     #db_range_cet = [utc_to_cet(db_range_utc[0]), utc_to_cet(db_range_utc[1])]
 
@@ -45,15 +46,15 @@ def getEntriesforDate(date, dbConnection):
     session = dbConnection.Session()
 
     # STOPS
-    stop_query = session.query(StopsTable).filter(and_(StopsTable.startTime >= dayrange_timestamp[0],
-                                                       StopsTable.startTime < dayrange_timestamp[1]))
+    stop_query = session.query(dbtables.StopsTable).filter(and_(dbtables.StopsTable.startTime >= dayrange_timestamp[0],
+                                                       dbtables.StopsTable.startTime < dayrange_timestamp[1]))
     stops_list = stop_query.all()
     # convert DatabaseTable objects to easier to use Stop objects
     #stops_list = [stop.Stop(stop) for stop in stops_list] # equivalent to list(map(Stop, stops_list))
 
     # MOVEMENTS
-    movement_query = session.query(MovementTable).filter(and_(MovementTable.startTime >= dayrange_timestamp[0],
-                                                              MovementTable.startTime < dayrange_timestamp[1]))
+    movement_query = session.query(dbtables.MovementTable).filter(and_(dbtables.MovementTable.startTime >= dayrange_timestamp[0],
+                                                              dbtables.MovementTable.startTime < dayrange_timestamp[1]))
     movements_list = movement_query.all()
     #movements_list = [movement.Movement(movement) for movement in movements_list]
 
