@@ -1,4 +1,4 @@
-import sys, logging
+import sys, logging, traceback
 from appstatus import datehandler
 from database import dbconnection
 from appstatus import envvariables
@@ -26,6 +26,6 @@ if __name__ == '__main__':
         # do some other stuff that needs both dbConnection and appStatus
         mainWindow = MainWindow(appStatus, dbConnection)
 
-    except Exception:
+    except Exception as e:
         print('Exception occurred')
-
+        traceback.print_exc(file=sys.stdout)
