@@ -1,6 +1,7 @@
 from sqlalchemy import Table
 
 
+
 # WHAT DO I DO ???                                                              xxxxxxxxx
 # define tables from database:
 # the class definitions need to be the way they are,
@@ -12,6 +13,9 @@ from sqlalchemy import Table
 
 # the only way I can think of is to somehow to deliver the DatabaseConnectionObject to this file when importing
 # - but that doesn't sound good either
+
+stops = Table('stops', Base.metadata, autoload=True, autoload_with=engine)
+locations = Table('locations', Base.metadata, autoload=True, autoload_with=engine)
 
 
 class StopsTable(Base):

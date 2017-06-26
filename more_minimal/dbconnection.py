@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -13,4 +13,12 @@ class DatabaseConnection():
         self.engine.connect()
         self.Base = declarative_base(self.engine)
         self.Session = sessionmaker(bind=self.engine)
+
+        meta = MetaData()
+
+        self.stops = Table('stops', meta, autoload=True, autoload_with=self.engine)
+        print(self.stops.columns)
+        self.locations = Table('locations', meta, autoload=True, autoload_with=self.engine)
+        print(self.locations.columns)
+
 

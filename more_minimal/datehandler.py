@@ -1,6 +1,6 @@
 from sqlalchemy import and_
 
-import dbtables
+#import dbtables
 
 
 # class with some status information as properties and functions to change those properties
@@ -24,15 +24,15 @@ class ApplicationStatus():
 
 def determineDatabaseRange(dbConnection):
     session = dbConnection.Session()
-    query = session.query(dbtables.LocationsTable.time)
-    dbRange = [query.first()[0], query.order_by(dbtables.LocationsTable.id.desc()).first()[0]]
+    query = session.query(dbConnection.locations.columns.time)
+    dbRange = [query.first()[0], query.order_by(dbConnection.locations.columns.id.desc()).first()[0]]
     return dbRange
 
 
 def getEntriesforDate(date, dbConnection):
     session = dbConnection.Session()
-    query = session.query(dbtables.StopsTable).filter(and_(dbtables.StopsTable.startTime >= 1496355082430,
-                                                           dbtables.StopsTable.startTime <= 1496416011016))
+    query = session.query(dbConnection.stops).filter(and_(dbConnection.stops.columns.startTime >= 1496355082430,
+                                                           dbConnection.stops.columns.startTime <= 1496416011016))
     entries = query.all()
 
     return entries
