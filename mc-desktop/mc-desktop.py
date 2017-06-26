@@ -21,7 +21,7 @@ if __name__ == '__main__':
         # initialize a dbConnection and an object that holds the applications' status information
         # those objects are supposed to be passed around the whole app, so every component has access to these infos and can change them
         dbConnection = dbconnection.DatabaseConnection(envvariables.DB_PATH)
-        appStatus = datehandler.ApplicationStatus()
+        appStatus = datehandler.ApplicationStatus(dbConnection)
 
         # do some other stuff that needs both dbConnection and appStatus
         mainWindow = MainWindow(appStatus, dbConnection)
