@@ -23,7 +23,7 @@ if __name__ == '__main__':
     try:
         # initialize a dbConnection and an object that holds the applications' status information
         # those objects are supposed to be passed around the whole app, so every component has access to these infos and can change them
-        DB_PATH = os.path.join(os.path.abspath(__file__), './assets/data.db')
+        DB_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data.db')
         dbConnection = dbconnection.DatabaseConnection(DB_PATH)
         appStatus = datehandler.ApplicationStatus(dbConnection)
 
